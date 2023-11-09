@@ -1,4 +1,7 @@
+﻿using Blogger.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<BloggerDbContext>();
 
 // Add services to the container.
 

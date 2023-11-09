@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Blogger.API.Microservice": {
+    "Blogger.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
