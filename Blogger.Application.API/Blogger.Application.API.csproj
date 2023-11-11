@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blogger.API.Database\Blogger.Database.csproj" />
+    <ProjectReference Include="..\Blogger.Infrastructure.Database\Blogger.Infrastructure.Database.csproj" />
+    <ProjectReference Include="..\Blogger.UseCases.Core\Blogger.UseCases.Core.csproj" />
   </ItemGroup>
 
 </Project>

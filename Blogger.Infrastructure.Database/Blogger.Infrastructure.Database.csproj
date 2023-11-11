@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blogger.API.Core\Blogger.Entities.csproj" />
+    <ProjectReference Include="..\Blogger.UseCases.Core\Blogger.UseCases.Core.csproj" />
   </ItemGroup>
 
 </Project>

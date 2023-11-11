@@ -1,4 +1,4 @@
-﻿using Blogger.Entities;
+﻿using Blogger.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BloggerDbContext>();
