@@ -4,6 +4,7 @@ namespace Blogger.UseCases.Core.Interfaces;
 
 public interface IUserRepository
 {
-    public User CreateUser(User user);
+    public void CreateUser(User user);
+
     public bool EmailAddressAlreadyExists(string emailAddress);
 }

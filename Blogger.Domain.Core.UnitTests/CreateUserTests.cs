@@ -4,7 +4,7 @@ using Blogger.UseCases.Core.Interfaces;
 using Blogger.UseCases.Core.UseCases.Users;
 using NSubstitute;
 
-namespace Blogger.UseCases.Core.UnitTests
+namespace Blogger.Domain.Core.UnitTests
 {
     public class CreateUserTests
     {
@@ -20,25 +20,23 @@ namespace Blogger.UseCases.Core.UnitTests
         [Fact]
         public void Should_create_User()
         {
-            var expected = new User()
+            User expected = new()
             {
                 FirstName = "FirstName",
                 LastName = "LastName",
                 EmailAddress = "first.last@email.com",
                 Password = "xsfwoq455",
             };
-            _userRepository.CreateUser(expected).Returns(expected);
 
-            var actual = _createUser.Execute(expected);
+            _createUser.Execute(expected);
 
             _userRepository.Received().CreateUser(expected);
-            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void When_User_EmailAddress_already_exists_Then_should_throw_InvalidOperationException()
         {
-            var expected = new User()
+            User expected = new()
             {
                 FirstName = "FirstName",
                 LastName = "LastName",
@@ -50,6 +48,4 @@ namespace Blogger.UseCases.Core.UnitTests
             Assert.Throws<DuplicateEmailException>(() => _createUser.Execute(expected));
         }
     }
-
-
 }

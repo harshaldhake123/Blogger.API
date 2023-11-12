@@ -5,13 +5,21 @@ namespace Blogger.Infrastructure.Database.Data;
 
 public class SqlUserRepository : IUserRepository
 {
-    public User CreateUser(User user)
+    private readonly BloggerDbContext _bloggerDbContext;
+
+    public SqlUserRepository(BloggerDbContext bloggerDbContext)
     {
-        throw new NotImplementedException();
+        _bloggerDbContext = bloggerDbContext;
+    }
+
+    public void CreateUser(User user)
+    {
+        _bloggerDbContext.User.Add(user);
+        _bloggerDbContext.SaveChanges();
     }
 
     public bool EmailAddressAlreadyExists(string emailAddress)
     {
-        throw new NotImplementedException();
+        return _bloggerDbContext.User.Any(u => u.EmailAddress == emailAddress);
     }
 }

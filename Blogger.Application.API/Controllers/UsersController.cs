@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Application.API.Controllers;
 
-[Route("api/[controller]")]
-[ApiController]
-public class UsersController : ControllerBase
+public class UsersController : ApiControllerBase
 {
     private readonly BloggerDbContext _context;
 
@@ -16,7 +14,6 @@ public class UsersController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Users
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUser()
     {

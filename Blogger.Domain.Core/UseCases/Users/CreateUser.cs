@@ -13,13 +13,13 @@ namespace Blogger.UseCases.Core.UseCases.Users
             _userRepository = userRepository;
         }
 
-        public User Execute(User user)
+        public void Execute(User user)
         {
             if (_userRepository.EmailAddressAlreadyExists(user.EmailAddress))
             {
                 throw new DuplicateEmailException();
             }
-            return _userRepository.CreateUser(user);
+            _userRepository.CreateUser(user);
         }
     }
 }
