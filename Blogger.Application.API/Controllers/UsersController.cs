@@ -1,26 +1,22 @@
-﻿using Blogger.Infrastructure.Database;
+﻿using Blogger.Domain.Core.UseCases.Users;
 using Blogger.UseCases.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Application.API.Controllers;
 
 public class UsersController : ApiControllerBase
 {
-    private readonly BloggerDbContext _context;
+    private readonly IUserService _userService;
 
-    public UsersController(BloggerDbContext context)
+    public UsersController(IUserService userService)
     {
-        _context = context;
+        _userService = userService;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetUser()
+    [HttpPost]
+    public async Task<ActionResult> CreateUser(User user)
     {
-        if (_context.User == null)
-        {
-            return NotFound();
-        }
-        return await _context.User.ToListAsync();
+        await _userService.CreateUser(user);
+        return Ok();
     }
 }

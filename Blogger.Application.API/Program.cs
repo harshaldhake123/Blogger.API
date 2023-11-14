@@ -1,9 +1,11 @@
-﻿using Blogger.Infrastructure.Database.DependencyInjection;
+﻿using Blogger.Domain.Core.DependencyInjection;
+using Blogger.Infrastructure.Database.DependencyInjection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructure(builder.Configuration)
+    .AddDomain();
 
 builder.Services.AddControllers();
 

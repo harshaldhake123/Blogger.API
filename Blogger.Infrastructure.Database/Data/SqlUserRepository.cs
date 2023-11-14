@@ -1,5 +1,6 @@
 ﻿using Blogger.UseCases.Core.Entities;
 using Blogger.UseCases.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Infrastructure.Database.Data;
 
@@ -12,14 +13,14 @@ public class SqlUserRepository : IUserRepository
         _bloggerDbContext = bloggerDbContext;
     }
 
-    public void CreateUser(User user)
+    public async Task CreateUser(User user)
     {
-        _bloggerDbContext.User.Add(user);
-        _bloggerDbContext.SaveChanges();
+        await _bloggerDbContext.User.AddAsync(user);
+        await _bloggerDbContext.SaveChangesAsync();
     }
 
-    public bool EmailAddressAlreadyExists(string emailAddress)
+    public async Task<bool> EmailAddressAlreadyExists(string emailAddress)
     {
-        return _bloggerDbContext.User.Any(u => u.EmailAddress == emailAddress);
+        return await _bloggerDbContext.User.AnyAsync(u => u.EmailAddress == emailAddress);
     }
 }

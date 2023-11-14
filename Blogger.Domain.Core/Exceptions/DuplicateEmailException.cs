@@ -1,6 +1,5 @@
-﻿namespace Blogger.UseCases.Core.Exceptions
+﻿namespace Blogger.UseCases.Core.Exceptions;
+
+public class DuplicateEmailException : Exception
 {
-    public class DuplicateEmailException : Exception
-    {
-    }
 }
