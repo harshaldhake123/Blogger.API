@@ -1,4 +1,4 @@
-﻿using Blogger.UseCases.Core.Entities;
+﻿using Blogger.Domain.Core.Entities;
 
 namespace Blogger.Domain.Core.UseCases.Users;
 

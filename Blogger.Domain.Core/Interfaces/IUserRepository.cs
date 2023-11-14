@@ -1,6 +1,6 @@
-﻿using Blogger.UseCases.Core.Entities;
+﻿using Blogger.Domain.Core.Entities;
 
-namespace Blogger.UseCases.Core.Interfaces;
+namespace Blogger.Domain.Core.Interfaces;
 
 public interface IUserRepository
 {

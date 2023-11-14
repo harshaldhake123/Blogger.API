@@ -1,4 +1,4 @@
-﻿using Blogger.UseCases.Core.Entities;
+﻿using Blogger.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Infrastructure.Database;

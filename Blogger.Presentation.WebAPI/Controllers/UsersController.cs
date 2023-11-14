@@ -1,8 +1,8 @@
-﻿using Blogger.Domain.Core.UseCases.Users;
-using Blogger.UseCases.Core.Entities;
+using Blogger.Domain.Core.Entities;
+using Blogger.Domain.Core.UseCases.Users;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blogger.Application.API.Controllers;
+namespace Blogger.Presentation.WebAPI.Controllers;
 
 public class UsersController : ApiControllerBase
 {

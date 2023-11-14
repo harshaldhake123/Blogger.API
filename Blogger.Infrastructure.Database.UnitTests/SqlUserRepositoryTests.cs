@@ -1,5 +1,5 @@
+using Blogger.Domain.Core.Entities;
 using Blogger.Infrastructure.Database.Data;
-using Blogger.UseCases.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Infrastructure.Database.UnitTests;
@@ -18,7 +18,7 @@ public class SqlUserRepositoryTests
     }
 
     [Fact]
-    public async Task CreateUser_should_save_user_to_database()
+    public async Task CreateUserShouldSaveUserToDatabase()
     {
         User user = new()
         {
@@ -34,7 +34,7 @@ public class SqlUserRepositoryTests
     }
 
     [Fact]
-    public async Task When_EmailAddress_already_exists_then_EmailAddressAlreadyExists_should_return_true()
+    public async Task WhenEmailAddressAlreadyExistsThenEmailAddressAlreadyExistsShouldReturnTrue()
     {
         var emailAddress = "abc@email.com";
         User user = new()
@@ -52,7 +52,7 @@ public class SqlUserRepositoryTests
     }
 
     [Fact]
-    public async Task When_EmailAddress_does_not_exist_then_EmailAddressAlreadyExists_should_return_false()
+    public async Task WhenEmailAddressDoesNotExistThenEmailAddressAlreadyExistsShouldReturnFalse()
     {
         string emailAddress = "abc@email.com";
 

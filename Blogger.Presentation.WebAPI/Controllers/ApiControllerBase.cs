@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Blogger.Application.API.Controllers;
+namespace Blogger.Presentation.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

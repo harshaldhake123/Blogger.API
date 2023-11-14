@@ -1,7 +1,7 @@
+using Blogger.Domain.Core.Entities;
+using Blogger.Domain.Core.Exceptions;
+using Blogger.Domain.Core.Interfaces;
 using Blogger.Domain.Core.UseCases.Users;
-using Blogger.UseCases.Core.Entities;
-using Blogger.UseCases.Core.Exceptions;
-using Blogger.UseCases.Core.Interfaces;
 using NSubstitute;
 
 namespace Blogger.Domain.Core.UnitTests;
@@ -18,7 +18,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public async Task Should_create_User()
+    public async Task ShouldCreateUser()
     {
         User expected = new()
         {
@@ -34,7 +34,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public async Task When_User_EmailAddress_already_exists_Then_should_throw_InvalidOperationException()
+    public async Task WhenUserEmailAddressAlreadyExistsThenShouldThrowInvalidOperationException()
     {
         User expected = new()
         {

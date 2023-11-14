@@ -1,4 +1,4 @@
-﻿using Blogger.Domain.Core.DependencyInjection;
+using Blogger.Domain.Core.DependencyInjection;
 using Blogger.Infrastructure.Database.DependencyInjection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

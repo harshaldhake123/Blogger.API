@@ -1,6 +1,6 @@
-﻿using Blogger.UseCases.Core.Entities;
-using Blogger.UseCases.Core.Exceptions;
-using Blogger.UseCases.Core.Interfaces;
+﻿using Blogger.Domain.Core.Entities;
+using Blogger.Domain.Core.Exceptions;
+using Blogger.Domain.Core.Interfaces;
 
 namespace Blogger.Domain.Core.UseCases.Users;
 
@@ -19,6 +19,6 @@ public class UserService : IUserService
         {
             throw new DuplicateEmailException();
         }
-       await  _userRepository.CreateUser(user);
+        await _userRepository.CreateUser(user);
     }
 }

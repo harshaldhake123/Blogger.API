@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Blogger.Domain.Core.Interfaces;
+using Blogger.Infrastructure.Database.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +13,7 @@ public static class DependencyInjection
         services.AddDbContext<BloggerDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString("BloggerDbContext") ?? throw new InvalidOperationException("'BloggerDbContext' ConnectionString not found."),
         builder => builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(5), null)));
+        services.AddScoped<IUserRepository, SqlUserRepository>();
         return services;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Blogger.UseCases.Core.Exceptions;
+﻿namespace Blogger.Domain.Core.Exceptions;
 
 public class DuplicateEmailException : Exception
 {
