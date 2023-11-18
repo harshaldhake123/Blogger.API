@@ -10,11 +10,13 @@ public class UserServiceTests
 {
     private readonly UserService _userService;
     private readonly IUserRepository _userRepository;
+    private readonly IUserAuthenticationService _userAuthenticationService;
 
     public UserServiceTests()
     {
         _userRepository = Substitute.For<IUserRepository>();
-        _userService = new UserService(_userRepository);
+        _userAuthenticationService = Substitute.For<IUserAuthenticationService>();
+        _userService = new UserService(_userRepository,_userAuthenticationService);
     }
 
     [Fact]
@@ -25,7 +27,7 @@ public class UserServiceTests
             FirstName = "FirstName",
             LastName = "LastName",
             EmailAddress = "first.last@email.com",
-            Password = "xsfwoq455",
+            Password = "abcd",
         };
 
         await _userService.CreateUser(expected);
