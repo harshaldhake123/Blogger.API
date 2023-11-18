@@ -91,4 +91,24 @@ public class SqlUserRepositoryTests
 
         Assert.Null(actual);
     }
+
+    [Fact]
+    public async Task UpdateUserUpdatesUserInDb()
+    {
+        User user = new()
+        {
+            FirstName = "FirstName",
+            LastName = "LastName",
+            EmailAddress = "abc@email.com",
+            Password = "abcd",
+        };
+        _bloggerDbContext.User.Add(user);
+        _bloggerDbContext.SaveChanges();
+
+        user.Password = "updated password";
+        await _sqlUserRepository.UpdateUser(user);
+
+        User updatedUser = _bloggerDbContext.User.First(u => u.EmailAddress == user.EmailAddress);
+        Assert.Equal(user.Password, updatedUser.Password);
+    }
 }

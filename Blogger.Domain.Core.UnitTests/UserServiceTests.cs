@@ -40,6 +40,7 @@ public class UserServiceTests
     {
         User expected = new()
         {
+            ID = 1,
             FirstName = "FirstName",
             LastName = "LastName",
             EmailAddress = "first.last@email.com",
@@ -56,10 +57,63 @@ public class UserServiceTests
         User user = new()
         {
             EmailAddress = "first.last@email.com",
+            Password = "user input password",
+        };
+
+        User expected = new()
+        {
+            ID = 1,
+            FirstName = "FirstName",
+            LastName = "LastName",
+            EmailAddress = "first.last@email.com",
+            Password = "hashedPassword",
+        };
+        _userRepository.GetUser(user.EmailAddress).Returns(expected);
+        _userAuthenticationService.VerifyPassword(Arg.Any<User>(), expected.Password).Returns(true);
+
+        var loggedIn = await _userService.LoginUser(user);
+
+        Assert.True(loggedIn);
+        await _userRepository.Received(1).GetUser(user.EmailAddress);
+    }
+
+    [Fact]
+    public async Task LoginUserShouldReturnFalseWhenUserDoesntExistInDb()
+    {
+        User user = new()
+        {
+            EmailAddress = "first.last@email.com",
             Password = "xsfwoq455",
         };
-        await _userService.LoginUser(user);
+        var loggedIn = await _userService.LoginUser(user);
 
+        Assert.False(loggedIn);
+        await _userRepository.Received(1).GetUser(user.EmailAddress);
+    }
+
+    [Fact]
+    public async Task LoginUserShouldReturnFalseWhenPasswordVerificationFails()
+    {
+        User user = new()
+        {
+            EmailAddress = "first.last@email.com",
+            Password = "user input password",
+        };
+
+        User expected = new()
+        {
+            ID = 1,
+            FirstName = "FirstName",
+            LastName = "LastName",
+            EmailAddress = "first.last@email.com",
+            Password = "hashedPassword",
+        };
+        _userRepository.GetUser(user.EmailAddress).Returns(expected);
+        _userAuthenticationService.VerifyPassword(Arg.Any<User>(), expected.Password).Returns(false);
+
+        var loggedIn = await _userService.LoginUser(user);
+
+        Assert.False(loggedIn);
         await _userRepository.Received(1).GetUser(user.EmailAddress);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Blogger.Domain.Core.Entities;
 using Blogger.Domain.Core.Exceptions;
 using Blogger.Domain.Core.Interfaces;
-using Microsoft.AspNetCore.Identity;
 
 namespace Blogger.Domain.Core.UseCases.Users;
 
@@ -35,29 +34,6 @@ public class UserService : IUserService
         {
             return false;
         }
-        return await VerifyUserPassword(user, userFromDb.Password);
-    }
-
-    private async Task<bool> VerifyUserPassword(User user, string storedPassword)
-    {
-        var result = _userAuthenticationService.VerifyPassword(user, storedPassword);
-        switch (result)
-        {
-            case PasswordVerificationResult.Success:
-                return true;
-
-            case PasswordVerificationResult.SuccessRehashNeeded:
-                await UpdateUserHashedPassword(user);
-                return true;
-
-            default:
-                return false;
-        }
-    }
-
-    private async Task UpdateUserHashedPassword(User user)
-    {
-        user.Password = _userAuthenticationService.HashPassword(user);
-        await _userRepository.UpdateUser(user);
+        return await _userAuthenticationService.VerifyPassword(user, userFromDb.Password);
     }
 }

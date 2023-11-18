@@ -1,7 +1,6 @@
 using Blogger.Domain.Core.Entities;
 using Blogger.Domain.Core.UseCases.Users;
 using Blogger.Presentation.WebAPI.Controllers;
-using NSubstitute;
 
 namespace Blogger.Presentation.WebAPI.UnitTests;
 
@@ -26,7 +25,7 @@ public class UsersControllerTests
             EmailAddress = "abc@xyz.com",
             Password = "abcd",
         };
-        var actual = await _usersController.CreateUser(user);
+        await _usersController.CreateUser(user);
         await _userService.Received(1).CreateUser(user);
     }
 
@@ -38,7 +37,7 @@ public class UsersControllerTests
             EmailAddress = "abc@xyz.com",
             Password = "abcd",
         };
-        var actual = await _usersController.LoginUser(user);
+        await _usersController.LoginUser(user);
         await _userService.Received(1).LoginUser(user);
     }
 }
