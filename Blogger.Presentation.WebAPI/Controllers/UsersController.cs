@@ -19,4 +19,10 @@ public class UsersController : ApiControllerBase
         await _userService.CreateUser(user);
         return Ok();
     }
+
+    [HttpPost("login")]
+    public async Task<ActionResult> LoginUser(User user)
+    {
+        return Ok(await _userService.LoginUser(user));
+    }
 }

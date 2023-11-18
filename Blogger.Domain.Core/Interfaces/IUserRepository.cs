@@ -7,4 +7,8 @@ public interface IUserRepository
     public Task CreateUser(User user);
 
     public Task<bool> EmailAddressAlreadyExists(string emailAddress);
+
+    Task<User?> GetUser(string emailAddress);
+
+    Task UpdateUser(User user);
 }

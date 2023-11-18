@@ -29,4 +29,16 @@ public class UsersControllerTests
         var actual = await _usersController.CreateUser(user);
         await _userService.Received(1).CreateUser(user);
     }
+
+    [Fact]
+    public async Task GetLogsInUserAndReturnsOKResult()
+    {
+        User user = new()
+        {
+            EmailAddress = "abc@xyz.com",
+            Password = "abcd",
+        };
+        var actual = await _usersController.LoginUser(user);
+        await _userService.Received(1).LoginUser(user);
+    }
 }

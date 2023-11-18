@@ -60,4 +60,35 @@ public class SqlUserRepositoryTests
 
         Assert.False(actual);
     }
+
+    [Fact]
+    public async Task GetUserShouldReturnUser()
+    {
+        User user = new()
+        {
+            FirstName = "FirstName",
+            LastName = "LastName",
+            EmailAddress = "abc@email.com",
+            Password = "abcd",
+        };
+        _bloggerDbContext.User.Add(user);
+        _bloggerDbContext.SaveChanges();
+
+        var actual = await _sqlUserRepository.GetUser(user.EmailAddress);
+
+        Assert.Equal(user, actual);
+    }
+
+    [Fact]
+    public async Task ShouldReturnFalseWhenUserDoesntExist()
+    {
+        User user = new()
+        {
+            EmailAddress = "abc@email.com",
+            Password = "abcd",
+        };
+        var actual = await _sqlUserRepository.GetUser(user.EmailAddress);
+
+        Assert.Null(actual);
+    }
 }

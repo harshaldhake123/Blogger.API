@@ -16,7 +16,7 @@ public class UserServiceTests
     {
         _userRepository = Substitute.For<IUserRepository>();
         _userAuthenticationService = Substitute.For<IUserAuthenticationService>();
-        _userService = new UserService(_userRepository,_userAuthenticationService);
+        _userService = new UserService(_userRepository, _userAuthenticationService);
     }
 
     [Fact]
@@ -48,5 +48,18 @@ public class UserServiceTests
         _userRepository.EmailAddressAlreadyExists(expected.EmailAddress).Returns(true);
 
         await Assert.ThrowsAsync<DuplicateEmailException>(() => _userService.CreateUser(expected));
+    }
+
+    [Fact]
+    public async Task ShouldLoginUser()
+    {
+        User user = new()
+        {
+            EmailAddress = "first.last@email.com",
+            Password = "xsfwoq455",
+        };
+        await _userService.LoginUser(user);
+
+        await _userRepository.Received(1).GetUser(user.EmailAddress);
     }
 }

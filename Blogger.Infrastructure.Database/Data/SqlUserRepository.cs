@@ -23,4 +23,15 @@ public class SqlUserRepository : IUserRepository
     {
         return await _bloggerDbContext.User.AnyAsync(u => u.EmailAddress == emailAddress);
     }
+
+    public async Task<User?> GetUser(string emailAddress)
+    {
+        return await _bloggerDbContext.User.FirstOrDefaultAsync(u => u.EmailAddress == emailAddress);
+    }
+
+    public async Task UpdateUser(User user)
+    {
+        _bloggerDbContext.User.Update(user);
+        await _bloggerDbContext.SaveChangesAsync();
+    }
 }

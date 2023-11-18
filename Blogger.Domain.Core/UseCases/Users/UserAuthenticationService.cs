@@ -16,4 +16,9 @@ public class UserAuthenticationService : IUserAuthenticationService
     {
         return _passwordHasher.HashPassword(user, user.Password);
     }
+
+    public PasswordVerificationResult VerifyPassword(User user, string storedHashedPassword)
+    {
+        return _passwordHasher.VerifyHashedPassword(user, storedHashedPassword, user.Password);
+    }
 }
