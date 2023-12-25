@@ -2,7 +2,7 @@ using Blogger.Domain.Core.Entities;
 using Blogger.Infrastructure.Database.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blogger.Infrastructure.Database.UnitTests;
+namespace Blogger.Infrastructure.Database.IntegrationTests;
 
 public class SqlUserRepositoryTests
 {
