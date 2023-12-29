@@ -7,11 +7,11 @@ namespace Blogger.Presentation.WebAPI.UnitTests;
 public class UsersControllerTests
 {
     private readonly UsersController _usersController;
-    private readonly IApplicationUserService _applicationUserService;
+    private readonly IUserApplicationService _applicationUserService;
 
     public UsersControllerTests()
     {
-        _applicationUserService = Substitute.For<IApplicationUserService>();
+        _applicationUserService = Substitute.For<IUserApplicationService>();
         _usersController = new UsersController(_applicationUserService);
     }
 

@@ -4,7 +4,7 @@ namespace Blogger.Domain.Core.Interfaces;
 
 public interface IUserService
 {
-    public Task CreateUser(User user);
+    public Task<User> CreateUser(User user);
 
     public Task<User> LoginUser(User user);
 }

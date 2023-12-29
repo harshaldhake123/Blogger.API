@@ -6,10 +6,11 @@ namespace Blogger.Infrastructure.Database.Data;
 
 public class SqlUserRepository(BloggerDbContext bloggerDbContext) : IUserRepository
 {
-    public async Task CreateUser(User user)
+    public async Task<User> CreateUser(User user)
     {
         await bloggerDbContext.User.AddAsync(user);
         await bloggerDbContext.SaveChangesAsync();
+        return user;
     }
 
     public async Task<bool> EmailAddressAlreadyExists(string emailAddress)

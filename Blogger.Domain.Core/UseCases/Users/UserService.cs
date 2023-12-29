@@ -8,14 +8,14 @@ public class UserService(
     IUserRepository userRepository,
     IUserAuthenticationService userAuthenticationService) : IUserService
 {
-    public async Task CreateUser(User user)
+    public async Task<User> CreateUser(User user)
     {
         user.Password = userAuthenticationService.HashPassword(user);
         if (await userRepository.EmailAddressAlreadyExists(user.EmailAddress))
         {
             throw new DuplicateEmailException();
         }
-        await userRepository.CreateUser(user);
+        return await userRepository.CreateUser(user);
     }
 
     public async Task<User> LoginUser(User user)

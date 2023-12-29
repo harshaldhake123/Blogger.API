@@ -10,7 +10,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDomain(this IServiceCollection services)
     {
-        services.AddSingleton<IUserService, UserService>()
+        services
+            .AddSingleton<IUserService, UserService>()
             .AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>()
             .AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
         return services;
