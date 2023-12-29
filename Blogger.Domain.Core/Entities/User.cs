@@ -13,6 +13,7 @@ public class User
     public string? LastName { get; set; }
 
     [EmailAddress]
+    [MaxLength(150)]
     public string EmailAddress { get; set; }
 
     public string Password { get; set; }

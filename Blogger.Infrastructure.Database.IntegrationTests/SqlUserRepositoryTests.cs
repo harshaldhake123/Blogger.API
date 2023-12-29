@@ -6,15 +6,15 @@ namespace Blogger.Infrastructure.Database.IntegrationTests;
 
 public class SqlUserRepositoryTests
 {
-    private readonly BloggerDbContext _bloggerDbContext;
+    private readonly IDbContextFactory dbContextFactory;
     private readonly SqlUserRepository _sqlUserRepository;
 
     public SqlUserRepositoryTests()
     {
         DbContextOptions<BloggerDbContext> options = new DbContextOptionsBuilder<BloggerDbContext>()
             .UseInMemoryDatabase("SqlUserRepositoryTests" + DateTime.UtcNow.ToFileTime()).Options;
-        _bloggerDbContext = new BloggerDbContext(options);
-        _sqlUserRepository = new SqlUserRepository(_bloggerDbContext);
+        dbContextFactory = new IDbContextFactory(options);
+        _sqlUserRepository = new SqlUserRepository(dbContextFactory);
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public class SqlUserRepositoryTests
 
         await _sqlUserRepository.CreateUser(user);
 
-        Assert.Equal(user, _bloggerDbContext.User.First(u => u.EmailAddress == user.EmailAddress));
+        Assert.Equal(user, _bloggerDbContext.Users.First(u => u.EmailAddress == user.EmailAddress));
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class SqlUserRepositoryTests
             EmailAddress = emailAddress,
             Password = "abcd",
         };
-        _bloggerDbContext.User.Add(user);
+        _bloggerDbContext.Users.Add(user);
         _bloggerDbContext.SaveChanges();
         bool actual = await _sqlUserRepository.EmailAddressAlreadyExists(emailAddress);
 
@@ -71,7 +71,7 @@ public class SqlUserRepositoryTests
             EmailAddress = "abc@email.com",
             Password = "abcd",
         };
-        _bloggerDbContext.User.Add(user);
+        _bloggerDbContext.Users.Add(user);
         _bloggerDbContext.SaveChanges();
 
         var actual = await _sqlUserRepository.GetUser(user.EmailAddress);
@@ -102,13 +102,13 @@ public class SqlUserRepositoryTests
             EmailAddress = "abc@email.com",
             Password = "abcd",
         };
-        _bloggerDbContext.User.Add(user);
+        _bloggerDbContext.Users.Add(user);
         _bloggerDbContext.SaveChanges();
 
         user.Password = "updated password";
         await _sqlUserRepository.UpdateUser(user);
 
-        User updatedUser = _bloggerDbContext.User.First(u => u.EmailAddress == user.EmailAddress);
+        User updatedUser = _bloggerDbContext.Users.First(u => u.EmailAddress == user.EmailAddress);
         Assert.Equal(user.Password, updatedUser.Password);
     }
 }

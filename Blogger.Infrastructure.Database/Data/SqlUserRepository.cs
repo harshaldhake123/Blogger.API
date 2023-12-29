@@ -4,28 +4,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Infrastructure.Database.Data;
 
-public class SqlUserRepository(BloggerDbContext bloggerDbContext) : IUserRepository
+public class SqlUserRepository(IDbContextFactory dbContextFactory) : IUserRepository
 {
     public async Task<User> CreateUser(User user)
     {
-        await bloggerDbContext.User.AddAsync(user);
+        using var bloggerDbContext = dbContextFactory.CreateBloggerDbContext();
+        await bloggerDbContext.Users.AddAsync(user);
         await bloggerDbContext.SaveChangesAsync();
         return user;
     }
 
     public async Task<bool> EmailAddressAlreadyExists(string emailAddress)
     {
-        return await bloggerDbContext.User.AnyAsync(u => u.EmailAddress == emailAddress);
+        using var bloggerDbContext = dbContextFactory.CreateBloggerDbContext();
+        return await bloggerDbContext.Users.AnyAsync(u => u.EmailAddress == emailAddress);
     }
 
     public async Task<User?> GetUser(string emailAddress)
     {
-        return await bloggerDbContext.User.FirstOrDefaultAsync(u => u.EmailAddress == emailAddress);
+        using var bloggerDbContext = dbContextFactory.CreateBloggerDbContext();
+        return await bloggerDbContext.Users.FirstOrDefaultAsync(u => u.EmailAddress == emailAddress);
     }
 
     public async Task UpdateUser(User user)
     {
-        bloggerDbContext.User.Update(user);
+        using var bloggerDbContext = dbContextFactory.CreateBloggerDbContext();
+        bloggerDbContext.Users.Update(user);
         await bloggerDbContext.SaveChangesAsync();
     }
 }
