@@ -3,10 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Infrastructure.Database;
 
-public class BloggerDbContext : DbContext
+public class BloggerDbContext(DbContextOptions<BloggerDbContext> options) : DbContext(options)
 {
-    public BloggerDbContext(DbContextOptions<BloggerDbContext> options) : base(options)
-    { }
-
     public DbSet<User> User { get; set; }
 }

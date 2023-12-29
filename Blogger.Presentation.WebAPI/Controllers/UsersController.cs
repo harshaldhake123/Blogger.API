@@ -4,25 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blogger.Presentation.WebAPI.Controllers;
 
-public class UsersController : ApiControllerBase
+public class UsersController(IApplicationUserService applicationUserService) : ApiControllerBase
 {
-    private readonly IApplicationUserService _applicationUserService;
-
-    public UsersController(IApplicationUserService applicationUserService)
-    {
-        _applicationUserService = applicationUserService;
-    }
-
     [HttpPost("signup")]
     public async Task<ActionResult> CreateUser(UserRegistrationRequest request)
     {
-        await _applicationUserService.RegisterUser(request);
+        await applicationUserService.RegisterUser(request);
         return Ok();
     }
 
     [HttpPost("login")]
     public async Task<ActionResult> LoginUser(UserLoginRequest request)
     {
-        return Ok(await _applicationUserService.LoginUser(request));
+        return Ok(await applicationUserService.LoginUser(request));
     }
 }

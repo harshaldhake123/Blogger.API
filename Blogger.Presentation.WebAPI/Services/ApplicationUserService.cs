@@ -4,15 +4,8 @@ using Blogger.Presentation.WebAPI.DTOs;
 
 namespace Blogger.Presentation.WebAPI.Services;
 
-public class ApplicationUserService : IApplicationUserService
+public class ApplicationUserService(IUserService userService) : IApplicationUserService
 {
-    private readonly IUserService _userService;
-
-    public ApplicationUserService(IUserService userService)
-    {
-        _userService = userService;
-    }
-
     public async Task<User> LoginUser(UserLoginRequest request)
     {
         var user = new User
@@ -20,7 +13,7 @@ public class ApplicationUserService : IApplicationUserService
             EmailAddress = request.EmailAddress,
             Password = request.Password
         };
-        return await _userService.LoginUser(user);
+        return await userService.LoginUser(user);
     }
 
     public async Task RegisterUser(UserRegistrationRequest request)
@@ -32,6 +25,6 @@ public class ApplicationUserService : IApplicationUserService
             EmailAddress = request.EmailAddress,
             Password = request.Password
         };
-        await _userService.CreateUser(user);
+        await userService.CreateUser(user);
     }
 }
