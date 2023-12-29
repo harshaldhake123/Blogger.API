@@ -73,7 +73,7 @@ public class UserServiceTests
 
         var loggedIn = await _userService.LoginUser(user);
 
-        Assert.True(loggedIn);
+        Assert.Equal(expected, loggedIn);
         await _userRepository.Received(1).GetUser(user.EmailAddress);
     }
 
@@ -85,9 +85,9 @@ public class UserServiceTests
             EmailAddress = "first.last@email.com",
             Password = "xsfwoq455",
         };
-        var loggedIn = await _userService.LoginUser(user);
 
-        Assert.False(loggedIn);
+        await Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.LoginUser(user));
+
         await _userRepository.Received(1).GetUser(user.EmailAddress);
     }
 
@@ -111,9 +111,7 @@ public class UserServiceTests
         _userRepository.GetUser(user.EmailAddress).Returns(expected);
         _userAuthenticationService.VerifyPassword(Arg.Any<User>(), expected.Password).Returns(false);
 
-        var loggedIn = await _userService.LoginUser(user);
-
-        Assert.False(loggedIn);
+        await Assert.ThrowsAsync<InvalidPasswordException>(async () => await _userService.LoginUser(user));
         await _userRepository.Received(1).GetUser(user.EmailAddress);
     }
 }

@@ -1,24 +1,24 @@
-using Blogger.Domain.Core.Entities;
-using Blogger.Domain.Core.UseCases.Users;
 using Blogger.Presentation.WebAPI.Controllers;
+using Blogger.Presentation.WebAPI.DTOs;
+using Blogger.Presentation.WebAPI.Services;
 
 namespace Blogger.Presentation.WebAPI.UnitTests;
 
 public class UsersControllerTests
 {
     private readonly UsersController _usersController;
-    private readonly IUserService _userService;
+    private readonly IApplicationUserService _applicationUserService;
 
     public UsersControllerTests()
     {
-        _userService = Substitute.For<IUserService>();
-        _usersController = new UsersController(_userService);
+        _applicationUserService = Substitute.For<IApplicationUserService>();
+        _usersController = new UsersController(_applicationUserService);
     }
 
     [Fact]
     public async Task PostCreatesUserAndReturnsOKResult()
     {
-        User user = new()
+        UserRegistrationRequest user = new()
         {
             FirstName = "John",
             LastName = "Doe",
@@ -26,18 +26,18 @@ public class UsersControllerTests
             Password = "abcd",
         };
         await _usersController.CreateUser(user);
-        await _userService.Received(1).CreateUser(user);
+        await _applicationUserService.Received(1).RegisterUser(user);
     }
 
     [Fact]
     public async Task GetLogsInUserAndReturnsOKResult()
     {
-        User user = new()
+        UserLoginRequest user = new()
         {
             EmailAddress = "abc@xyz.com",
             Password = "abcd",
         };
         await _usersController.LoginUser(user);
-        await _userService.Received(1).LoginUser(user);
+        await _applicationUserService.Received(1).LoginUser(user);
     }
 }

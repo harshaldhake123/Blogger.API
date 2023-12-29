@@ -1,28 +1,28 @@
-using Blogger.Domain.Core.Entities;
-using Blogger.Domain.Core.UseCases.Users;
+using Blogger.Presentation.WebAPI.DTOs;
+using Blogger.Presentation.WebAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blogger.Presentation.WebAPI.Controllers;
 
 public class UsersController : ApiControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly IApplicationUserService _applicationUserService;
 
-    public UsersController(IUserService userService)
+    public UsersController(IApplicationUserService applicationUserService)
     {
-        _userService = userService;
+        _applicationUserService = applicationUserService;
     }
 
-    [HttpPost]
-    public async Task<ActionResult> CreateUser(User user)
+    [HttpPost("signup")]
+    public async Task<ActionResult> CreateUser(UserRegistrationRequest request)
     {
-        await _userService.CreateUser(user);
+        await _applicationUserService.RegisterUser(request);
         return Ok();
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult> LoginUser(User user)
+    public async Task<ActionResult> LoginUser(UserLoginRequest request)
     {
-        return Ok(await _userService.LoginUser(user));
+        return Ok(await _applicationUserService.LoginUser(request));
     }
 }

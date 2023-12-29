@@ -1,11 +1,13 @@
 using Blogger.Domain.Core.DependencyInjection;
 using Blogger.Infrastructure.Database.DependencyInjection;
+using Blogger.Presentation.WebAPI.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddInfrastructure(builder.Configuration)
-    .AddDomain();
+    .AddDomain()
+    .AddSingleton<IApplicationUserService, ApplicationUserService>();
 
 builder.Services.AddControllers();
 

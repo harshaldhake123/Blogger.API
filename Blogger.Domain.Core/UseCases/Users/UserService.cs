@@ -27,13 +27,10 @@ public class UserService : IUserService
         await _userRepository.CreateUser(user);
     }
 
-    public async Task<bool> LoginUser(User user)
+    public async Task<User> LoginUser(User user)
     {
-        var userFromDb = await _userRepository.GetUser(user.EmailAddress);
-        if (userFromDb == null)
-        {
-            return false;
-        }
-        return await _userAuthenticationService.VerifyPassword(user, userFromDb.Password);
+        var matchedUser = await _userRepository.GetUser(user.EmailAddress) ?? throw new UserNotFoundException();
+        return await _userAuthenticationService.VerifyPassword(user, matchedUser.Password)
+            ? matchedUser : throw new InvalidPasswordException();
     }
 }
