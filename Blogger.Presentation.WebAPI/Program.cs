@@ -7,7 +7,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddDomain()
-    .AddSingleton<IUserApplicationService, UserApplicationService>();
+    .AddScoped<IUserApplicationService, UserApplicationService>();
 
 builder.Services.AddControllers();
 

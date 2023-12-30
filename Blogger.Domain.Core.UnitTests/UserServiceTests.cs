@@ -40,7 +40,7 @@ public class UserServiceTests
     {
         User expected = new()
         {
-            ID = 1,
+            Id = 1,
             FirstName = "FirstName",
             LastName = "LastName",
             EmailAddress = "first.last@email.com",
@@ -62,7 +62,7 @@ public class UserServiceTests
 
         User expected = new()
         {
-            ID = 1,
+            Id = 1,
             FirstName = "FirstName",
             LastName = "LastName",
             EmailAddress = "first.last@email.com",
@@ -102,7 +102,7 @@ public class UserServiceTests
 
         User expected = new()
         {
-            ID = 1,
+            Id = 1,
             FirstName = "FirstName",
             LastName = "LastName",
             EmailAddress = "first.last@email.com",

@@ -11,9 +11,9 @@ public static class DependencyInjection
     public static IServiceCollection AddDomain(this IServiceCollection services)
     {
         services
-            .AddSingleton<IUserService, UserService>()
-            .AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>()
-            .AddSingleton<IUserAuthenticationService, UserAuthenticationService>();
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IPasswordHasher<User>, PasswordHasher<User>>()
+            .AddScoped<IUserAuthenticationService, UserAuthenticationService>();
         return services;
     }
 }

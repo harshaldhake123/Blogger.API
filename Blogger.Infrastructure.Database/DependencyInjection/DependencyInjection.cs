@@ -11,19 +11,17 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
-            //.AddDbContext(configuration)
-            .AddSingleton<IDbContextFactory, DbContextFactory>()
-            .AddSingleton<IUserRepository, SqlUserRepository>();
+            .AddApplicationDbContext(configuration)
+            .AddScoped<IUserRepository, SqlUserRepository>();
         return services;
     }
 
-    private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration configuration)
     {
+        var connectionString = configuration.GetConnectionString(nameof(ApplicationDbContext))
+           ?? throw new InvalidOperationException(nameof(ApplicationDbContext) + " ConnectionString not found.");
         services
-            .AddDbContext<BloggerDbContext>(options =>
-                            options.UseSqlServer(configuration.GetConnectionString("BloggerDbContext") ?? throw new InvalidOperationException("'BloggerDbContext' ConnectionString not found."),
-                            builder => builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(5), null))
-                        );
+           .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
         return services;
     }
 }

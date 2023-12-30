@@ -19,7 +19,7 @@ public class UserApplicationService(IUserService userService) : IUserApplication
             FirstName = loggedInUser.FirstName,
             LastName = loggedInUser.LastName,
             EmailAddress = loggedInUser.EmailAddress,
-            ID = loggedInUser.ID,
+            ID = loggedInUser.Id,
         };
     }
 
@@ -38,7 +38,7 @@ public class UserApplicationService(IUserService userService) : IUserApplication
             FirstName = createdUser.FirstName,
             LastName = createdUser.LastName,
             EmailAddress = createdUser.EmailAddress,
-            ID = createdUser.ID,
+            ID = createdUser.Id,
         };
     }
 }
