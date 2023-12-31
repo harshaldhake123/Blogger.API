@@ -1,19 +1,14 @@
 using Blogger.Domain.Core.Entities;
 using Blogger.Infrastructure.Database.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Infrastructure.Database.IntegrationTests;
 
-public class SqlUserRepositoryTests
+public class SqlUserRepositoryTests : DatabaseIntegrationTestBase
 {
-    private readonly ApplicationDbContext _dbContext;
     private readonly SqlUserRepository _sqlUserRepository;
 
     public SqlUserRepositoryTests()
     {
-        DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase("SqlUserRepositoryTests" + DateTime.UtcNow.ToFileTime()).Options;
-        _dbContext = new ApplicationDbContext(options);
         _sqlUserRepository = new SqlUserRepository(_dbContext);
     }
 
